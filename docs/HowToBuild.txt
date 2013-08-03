@@ -1,0 +1,62 @@
+Links
+--------
+Open JDK Project Lambda Home Page
+http://openjdk.java.net/projects/lambda/
+
+Open JDK Project Lambda Latest Builds
+http://jdk8.java.net/lambda/
+
+Open JDK Project Lambda Source Code
+http://hg.openjdk.java.net/lambda/lambda
+
+JDK 8 Features Final List
+http://openjdk.java.net/projects/jdk8/features
+
+JDK 8 Dates and Milestones
+http://openjdk.java.net/projects/jdk8/
+
+State of Lambda
+http://cr.openjdk.java.net/~briangoetz/lambda/lambda-state-4.html
+
+Collections Overview
+http://cr.openjdk.java.net/~briangoetz/lambda/collections-overview.html
+
+Lambda Translation
+http://cr.openjdk.java.net/~briangoetz/lambda/lambda-translation.html
+
+Download Source Code
+--------------------
+hg clone http://hg.openjdk.java.net/lambda/lambda
+
+Build JDK 8
+------------------
+cd lambda
+sh ./get_source
+chmod a+x ./common/*
+cd ./commmon/makefiles
+sh ../autoconf/configure --with-boot-jdk=/opt/jdk1.7.0
+make images
+
+Update to a Branch
+-------------------
+hg pull -u
+
+Software Required
+-----------------------
+
+install build-essential
+install subversion
+install mercurial
+install tortoisehg  (command is thg)
+install awk
+install m4
+install ccache
+install openjdk-7-jdk
+install ant
+install vim
+install libX11-dev libxext-dev libxrender-dev libxtst-dev
+install libcups2-dev
+install libfreetype6-dev
+install libasound2-dev
+
+

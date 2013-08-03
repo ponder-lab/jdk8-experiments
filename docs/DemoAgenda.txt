@@ -1,0 +1,95 @@
+Demo Agenda
+
+Attendees:
+	1. Allan Delgado (HP Networking)
+	2. Carlos Jiménez (HP Networking)
+	3. Franklin Fallas (HP BestShore)
+	4. Julián Rodríguez (Bosz Digital)
+	5. Michale Picado (GAP)
+	6. Fabiel Zúñiga (HP Networking) 
+	7. Jonathan Sanchez (ATH)
+	8. Leonardo Vargas (Informatech).
+	9. Edwin Dalorzo (HP BestShore? -> Informatech!)
+	
+Funtional Programming Concepts
+	Demo 0
+		- Fist-class functions (i.e. functions as first class citizens).
+		- High Order Functions (filter, map, reduce).
+		- Anonymous Functions (i.e. Lambdas).
+		- Brief Haskell Demo.
+
+Java Implementation of Lambda Expressions
+	Demo 1
+		- Functional Interfaces.
+		- Create naive implementations of filter, map and reduce (i.e. Function<T,U>, Function2<T,U,V>).
+		- Change interface names to Predicate<T>, Mapper<T,U>, BinaryOperator<T>.
+		- Show how all these interfaces have been defined in the new java.util.functions package.
+		- Remove your interfaces and import the interfances from the java.util.functions package.
+	Demo 2
+		- The definition of the lambda is not the execution of the lambda.
+		- Lambdas with a single parameter and return (Predicate<T>)
+		- Lambdas with multiple parameters and return (BinaryOperator<T>, Comparator<T>)
+		- Lambdas with no parameters and return type/exceptions (Callable<T>)
+		- Lambdas with no parameters and no return type (Runnable)
+		- Lambdas with multiple statements in the body.
+		- Capturing lambdas.
+		- The meaning of this (lambdas incapable of recursion: fibonacci example).
+		- Lambdas as references.
+		- Lambdas as method arguments.
+		- Lambdas as return arguments.
+		- Classical problems with lambdas 
+			- Only functional interfaces.
+			- Ambiguity i.e. Comparators.comparing).
+	Demo 3
+		- Overview of the new Iterable interface.
+		- New collections API (filter, map, reduce, mapReduce, forEach, into, sort, groupBy).
+		- Ruduce to find minimum and maximum.
+		- Methods in MapStream (filter, filterKeys, filterValues, forEach, etc).
+		- Method chaining.
+		- Method/Constructor references as lambda expressions (using static and instance methods).
+		- Introduction to laziness.
+		- Using the class Comparators, Mappers, Predicates.
+		- Desugaring lambda expression (the bytecode level).
+		- Serialization issues.
+	Demo 4
+		- Extension methods.
+		- Choosing default implementation.
+		- Breaking defaults.
+		- Diamond inheritance.
+		- Ambiguity generates compiler exceptions.
+		- Laziness in detail (Streams concepts with extension methods).
+	Demo 5
+		- Fork/Join Framework introduction (Primality demo 1).
+		- Parallelism (Primality demo 1)..
+	Demo 6
+		- New Strams API (work in progress by JDK team in separate branch).
+	Demo 7
+		- How to download JDK 8 source code (Lambda, Jigsaw, JDK8, Infrabuild, etc.).
+		- How to configure build.
+		- How to build JDK 8.
+		- How to configure development environment with JEdit.
+
+Reference Material
+
+	-Open JDK Project Lambda Home Page
+		http://openjdk.java.net/projects/lambda/
+	- Open JDK Project Lambda Latest Builds
+		http://jdk8.java.net/lambda/
+	- Open JDK Project Lambda Source Code
+		http://hg.openjdk.java.net/lambda/lambda
+	- JDK 8 Features Final List
+		http://openjdk.java.net/projects/jdk8/features
+	- JDK 8 Dates and Milestones
+		http://openjdk.java.net/projects/jdk8/
+	- State of Lambda
+		http://cr.openjdk.java.net/~briangoetz/lambda/lambda-state-4.html
+	- Collections Overview
+		http://cr.openjdk.java.net/~briangoetz/lambda/collections-overview.html
+	- Lambda Translation
+		http://cr.openjdk.java.net/~briangoetz/lambda/lambda-translation.html
+	- Virtual Extension Methods 
+		http://medianetwork.oracle.com/video/player/1113272518001
+	- From Lambdas to Bytecode
+		http://medianetwork.oracle.com/video/player/1113272510001
+		
+		

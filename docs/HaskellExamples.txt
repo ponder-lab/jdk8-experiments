@@ -1,0 +1,95 @@
+Haskell Examples
+
+	odd 4
+	odd 3
+	let f = odd
+	f 4
+	f 3
+	
+	filter odd [1..10]
+	filter even [1..10]
+	
+	import Data.Char
+	
+	toLower 'A'
+	toUpper 'a'
+	
+	map toLower "Hello, Elvis"
+	map toUpper "Hello, World!"
+	
+	isDigit '1'
+	isDigit 'A'
+	
+	filter isDigit "I was born in 1978"
+	
+	digitToInt '1'
+	
+	map digitToInt $ filter isDigit "I was born in 1978"
+	sum $ map digitToInt $ filter isDigit "I was born in 1978"
+
+	let numbers = [1..10]
+	let weird = \n -> n % 2 == 0
+	filter weird numbers
+	filter (\n -> n % 2 == 0) numbers
+	
+	let summation = \a b -> a + b
+	summation 1 4
+	summation 4 3
+	
+	foldl summation 0 [1..5]
+	foldl (\a b -> a + b) 0 [1..5]
+	foldl (\a b -> a * b) 1 [1..5]
+	
+	foldl (+) 0 $ map digitToInt $ filter isDigit "I was born in 12345"
+	
+	[x | x <- [1..10], x `mod` 2 /= 0]
+	let onlyOdds = \n -> [x | x <- [1..n], x `mod` 2 /= 0]
+	(\n -> [x | x <- [1..n], x `mod` 2 /= 0]) 10
+	
+This is an example of a lambda expression in Haskell used to determine if a number is a prime:
+
+let isPrime = \n -> n > 1 && length [ x | x <- [2..n-1], n `mod` x == 0] == 0
+
+
+Another way to do primes:
+
+let factors = (\n -> [x | x <- [1..n], n `mod` x == 0]) //includes 1,x
+let factors = (\n -> [x | x <- [2..n-1], n `mod` x == 0]) //does not include 1,x
+let primes = [x | x <- [2..], factors x == []] //lazy evaluation
+take 10 primes //short-circuiting
+takeWhile (\n -> n < 100) primes //short-circuiting
+foldl (+) 0 $ takeWhile (\n -> n < 100) primes //short-circuiting
+
+
+
+How Reduction Works: 
+
+Sum:
+
+0 + [1 2 3 4 5]
+|    |
+  1  +  [2 3 4 5 6 7 8 9] 
+  |      |
+     3   +  [3 4 5]
+     |       |
+         6   + [4 5]
+         |      |
+           10   + [5]
+           |       |
+               15
+               
+Maximum:
+
+0 > [2 4 3 5 1 0]
+|    |
+  2  > [4 3 5 1 0]
+  |     |
+     4  > [3 5 1 0]
+     |     |
+        4  > [5 1 0]
+        |     |
+           5  > [1 0]
+           |     |
+              5  > [0]
+              |     |
+                 5

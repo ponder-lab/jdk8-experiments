@@ -1,0 +1,107 @@
+<project name="Lambda" basedir="." default="dist">
+
+	<!-- Project properties -->
+	<property environment="env"/>
+	<property name="lib.dir" value="lib" />
+	<property name="src.dir" value="src" />
+	<property name="build.dir" value="build" />
+	<property name="dist.dir" value="dist" />
+	<property name="scala.home" value="${env.SCALA_HOME}"/>
+
+	<!-- Add lib to classpath -->
+	<path id="classpath">
+		<fileset dir="${lib.dir}" includes="**/*.jar" />
+	</path>
+
+	<!-- Targets -->
+	<target name="init" depends="check-build-dir,create-build-dir">
+	</target>
+
+	<!-- Create the build directory and extract libs if it doesn't exist -->
+	<target name="check-build-dir">
+		<available file="${build.dir}" type="dir" property="${build.dir.exists}" />
+	</target>
+
+	<target name="create-build-dir" unless="${build.dir.exists}">
+		<mkdir dir="${build.dir}" />
+		<unjar dest="${build.dir}">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</fileset>
+		</unjar>
+	</target>
+
+	<!-- Compile -->
+	<target name="compile" depends="init">
+		<!-- Compile source code to build directory -->
+		<javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="classpath" includeantruntime="false" debug="true">
+			<!-- 
+			Experimental flag for lambdas:
+			http://mail.openjdk.java.net/pipermail/lambda-dev/2012-August/005357.html
+			-->
+			<!--compilerarg value="-XDuseGraphInference"/
+			<compilerarg value="-Xlint:unchecked"/>
+			-->
+		</javac>
+		
+		<!-- Copy all non-java files from src -->
+		<copy todir="${build.dir}">
+			<fileset dir="${src.dir}" excludes="**/*.java" />
+		</copy>
+	</target>
+
+	<!-- Distribution -->
+	<target name="dist" depends="compile">
+		<mkdir dir="${dist.dir}" />
+		<jar destfile="${dist.dir}/${ant.project.name}.jar" basedir="${build.dir}">
+			<manifest>
+				<attribute name="Main-Class" value="codemasters.lambda.jug.Pre01" />
+			</manifest>
+		</jar>
+	</target>
+	
+	<!-- Clean -->
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<delete dir="${dist.dir}" />
+	</target>
+	
+	<!-- Run 
+	<target name="run" depends="dist">
+		<java fork="true" jar="${dist.dir}/${ant.project.name}.jar" classpathref="classpath">
+			<jvmarg value="-Xmx1024M"/>
+		</java>
+	</target>
+	-->
+	
+	<!-- Run -->
+	<target name="run" depends="compile">
+		<!---->
+		<java fork="true" classname="codemasters.lambda.hackday.BasicLambda">
+			<classpath>
+				<pathelement path="${build.dir}"/>
+			</classpath>
+			<assertions>
+				<enable/>
+			</assertions>
+			<jvmarg value="-Xmx1024M"/>
+		</java>
+		<!---->
+		<!--
+		<junit showoutput="true" fork="yes">
+			<classpath>
+				<pathelement path="${build.dir}"/>
+			</classpath>
+			<jvmarg value="-Xmx1024M"/>
+			<assertions>
+				<enable/>
+			</assertions>
+			<formatter type="plain" usefile="false"/>
+			<test name="codemasters.lambda.questions.Answers"/>
+		</junit>
+		-->		
+	</target>
+
+</project>
+
+<!-- ::mode=xml:: -->

@@ -1,0 +1,63 @@
+How to Compile
+---------------
+
+This guide describes a series of steps that you should follow to compile your
+source code with JDK 1.8. 
+
+1. Download the following:
+
+	* JDK 8: http://jdk8.java.net/lambda/
+	* JEdit: http://www.jedit.org/
+	* Ant: http://ant.apache.org/
+
+2. Make the folling directory structure:
+
+	Sanbox
+	|-----jdk8
+	|-----ant
+	|-----projects
+	
+	* Place the uncompressed JDK build in the jdk8 directory.
+	* Place the uncompressed Apache Ant in the ant directory.
+	* The project directory will be for JEdit projects.
+	* If you already have Apache Ant installed, it is better if you make a copy
+	of it,since this new Apache Ant needs to be reconfigured to work with JDK 8.
+
+3. Install the following JEdit Plugins:
+
+	* Ant Farm
+	* Java Fold
+	* Project Builder
+	* Project Viewer
+	* Project Wizard
+	* SVN Plugin
+
+4. Configure your Apache Ant:
+
+	* Open the ant.bat file in a text editor.
+	* At the top of the file define the JAVA_HOME variable and make it point to
+	the directory where the JDK8 is installed. Somewhat like this:
+	
+	JAVA_HOME=C:\Sanbox\jdk8
+	
+5. Configure JEdit Ant Plugin
+	
+	* In JEdit go to Plugins -> Plugin Options -> Ant Farm -> Build Options
+	* In the dialog select the option:
+		"Run Ant targets using an external script/build file"
+	* Choose your modified ant.bat script.
+	
+
+6. Create a new Java Project:
+
+	* In JEdit go to Plugins -> Project Builder -> Create New Project
+	* Choose Java Application and click Next
+	* Choose your "projects" directoy as the place to locate files.
+	
+	Voila! At this point, JEdit will present four buttons in the tool bar:
+	Build Application, Compile, Clean and Run Application.
+	
+	These are based on the build.xml file and are executed according to the
+	corresponding Ant tasks.
+	
+	You're good to go, you may start writing lambda expressions :-)
