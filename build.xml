@@ -76,7 +76,7 @@
 	
 	<!-- Run -->
 	<target name="run" depends="compile">
-		<!---->
+		<!--
 		<java fork="true" classname="codemasters.lambda.hackday.BasicLambda">
 			<classpath>
 				<pathelement path="${build.dir}"/>
@@ -86,8 +86,8 @@
 			</assertions>
 			<jvmarg value="-Xmx1024M"/>
 		</java>
-		<!---->
-		<!--
+		-->
+		
 		<junit showoutput="true" fork="yes">
 			<classpath>
 				<pathelement path="${build.dir}"/>
@@ -97,9 +97,9 @@
 				<enable/>
 			</assertions>
 			<formatter type="plain" usefile="false"/>
-			<test name="codemasters.lambda.questions.Answers"/>
+			<test name="codemasters.lambda.hackday.BasicLambda"/>
 		</junit>
-		-->		
+				
 	</target>
 
 </project>
