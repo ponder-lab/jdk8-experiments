@@ -3,8 +3,8 @@ package codemasters.lambda.questions;
 import java.util.function.*;
 
 public class StackOverflow {
-	
-	private static Function<Integer, Integer> fibb = (Integer n) -> {
+	/*
+	private static final Function<Integer, Integer> fibb = (Integer n) -> {
 		if (n == 0) return 0;
 		if (n == 1) return 1;
 		return fibb.apply(n-2) + fibb.apply(n-1);
@@ -29,4 +29,5 @@ public class StackOverflow {
 			return fibonacci.apply(n);
 		}
 	}
+	*/
 }
