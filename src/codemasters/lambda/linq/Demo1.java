@@ -19,7 +19,7 @@ import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.Comparator.comparing;
+import static java.util.Comparator.*;
 
 public class Demo1 {
 	
@@ -79,7 +79,7 @@ public class Demo1 {
 	//Sort sales by cost.
 	public static void test07() {
 		
-		Comparator<Sale> byCost= comparing( (ToDoubleFunction<Sale>) Sale::getCost);
+		Comparator<Sale> byCost= comparingDouble(Sale::getCost);
 		List<Sale> sortedByCost;
 		
 		sortedByCost = sales.sorted( byCost )
@@ -117,7 +117,7 @@ public class Demo1 {
 	public static void test04() {
 		
 		Optional<Sale> mostCostlySale;
-		Comparator<Sale> byCost = comparing( (ToDoubleFunction<Sale>) Sale::getCost);//.reverse();
+		Comparator<Sale> byCost = comparingDouble(Sale::getCost);//.reverse();
 		
 		mostCostlySale = sales//.sort( byCost.reverse() )
 							  .findFirst();
@@ -143,12 +143,11 @@ public class Demo1 {
 						  .map(Entry::getValue)
 						  .findFirst();*/
 
-		ToIntFunction<Entry<Person, List<Sale>>> byAge;
-		byAge = e -> e.getKey().getAge(); 
+		
 		byYoungest = sales.collect(groupingBy(Sale::getBuyer))
 						 .entrySet()
 						 .stream()
-						 .sorted(comparing(byAge))
+						 .sorted(comparingInt(e -> e.getKey().getAge()))
 						 .map(Entry::getValue)
 						 .findFirst();
 

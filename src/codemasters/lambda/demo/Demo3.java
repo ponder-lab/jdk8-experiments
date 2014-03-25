@@ -16,7 +16,7 @@ import org.junit.Before;
 import org.junit.Assert;
 import org.hamcrest.Matcher;
 import org.hamcrest.collection.IsIterableContainingInOrder;
-import static java.util.Comparator.comparing;
+import static java.util.Comparator.*;
 import static org.junit.Assert.assertThat;
 import static java.util.Arrays.asList;
 import static org.hamcrest.core.Is.is;
@@ -141,7 +141,7 @@ public class Demo3 {
 	@Test
 	public void testSortComparing() {
 
-		cars.sorted(comparing( (ToDoubleFunction<Car>) Car::getOriginalValue));
+		cars.sorted(comparingDouble(Car::getOriginalValue));
 		assertThat(cars, contains(yaris, civic, tida, equator, mx5, x6));
 	}
 	

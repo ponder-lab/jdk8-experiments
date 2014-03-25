@@ -9,6 +9,12 @@ import org.junit.Before;
 import codemasters.lambda.domain.*;
 
 import static java.util.Arrays.asList;
+import static java.util.Arrays.stream;
+import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.mapping;
+import static java.util.function.Function.identity;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.hamcrest.Matchers.either;
@@ -22,20 +28,57 @@ import static java.util.Comparator.*;
 
 public class BasicLambda {
 	
+	private Person edwin,pedro, karla, oscar, franklin, patricia, alonso, victoria;
+	private Car yaris, mx5, equator, x6, civic, tida;
+	private Sale edwinFromFranklin, oscarFromEdwin, karlaFromAlonso, patriciaFromPedro,
+				 victoriaFromOscar, franklinFromOscar, alonsoFromKarla, karlaFromFranklin;
+				 
+	private Set<Person> persons;
+	private Set<Car> cars;
+	private Set<Sale> sales;
+	
+	
+	@Test
+	public void infinite(){
+		
+		Function<String, IntStream> a =  s -> s.codePoints();
+		Function<String, IntStream> b = a.andThen(is -> is.map(n-> Character.digit(n,10)));
+		
+		Stream<String> digits = asList("123","456","789").stream();
+		IntStream x = digits.flatMapToInt( s -> s.codePoints().map(n-> Character.digit(n,10))); 
+		x.forEach(System.out::println);
+	}
+	
+	@Test
+	public void sortByFrequency() {
+		String[] stringArray = {"x", "y", "z", "x", "x", "y", "a"};
+		
+		Stream<String> stream = Arrays.stream(stringArray);
+		
+		//Map<String,List<String>> freqs = stream.collect(groupingBy(Object::toString));
+		//System.out.println(freqs);
+		
+		Map<String,Integer> freqs = new HashMap<>();
+		
+		
+		
+		
+	}
+	
 	/*
 	 * 01. Print all car brands.
 	 */
 	 @Test
 	 public void printAllCarBrands() {
-	 	 String brands = cars.stream()
-	 	 					.map(Car::getBrand)
-	 	 					.collect(joining(","));
-	 	 					
-	 	 assertThat(brands,is(equalTo("Toyota,Mazda,Susuki,BMW,Honda,Nissan")));
+		 String brands = cars.stream()
+							.map(Car::getBrand)
+							.collect(joining(","));
+							
+		 assertThat(brands,is(equalTo("Toyota,Mazda,Susuki,BMW,Honda,Nissan")));
 	 }
 	
 	 private boolean isToyota(Sale sale) {
-	 	 return sale.getCar().getBrand().equals("Toyota");
+		 return sale.getCar().getBrand().equals("Toyota");
 	 }
 	
 	/*
@@ -48,7 +91,7 @@ public class BasicLambda {
 		toyotaSales = sales.stream()
 						  .filter(this::isToyota)
 						  .collect(toList());
-
+	
 		assertThat(toyotaSales, contains(oscarFromEdwin, alonsoFromKarla));						  
 	}
 	
@@ -96,6 +139,7 @@ public class BasicLambda {
 						 .mapToDouble(Sale::getCost)
 						 .sum();
 		
+						 
 		assertThat(sumOfCosts, is(69000.0));
 	}
 	
@@ -117,6 +161,7 @@ public class BasicLambda {
 		assertThat(salesByPerson.firstKey().getAge(), is(31));
 					
 	}
+	
 	/*
 	07. Sort sales by cost.
 	*/
@@ -130,8 +175,8 @@ public class BasicLambda {
 						  
 						  
 		assertThat(salesByCost, contains(alonsoFromKarla,oscarFromEdwin,edwinFromFranklin, 
-									    karlaFromAlonso, victoriaFromOscar, franklinFromOscar, 
-									    karlaFromFranklin, patriciaFromPedro));						  
+										karlaFromAlonso, victoriaFromOscar, franklinFromOscar, 
+										karlaFromFranklin, patriciaFromPedro));						  
 	}
 	/*
 	 * 08. Extract cars' original cost.
@@ -141,10 +186,10 @@ public class BasicLambda {
 		List<Double> originalCosts;
 		
 		originalCosts = sales.stream()
-			 				.map(Sale::getCar)
-			 				.map(Car::getOriginalValue)
-			 				.collect(toList());
-			 				
+							.map(Sale::getCar)
+							.map(Car::getOriginalValue)
+							.collect(toList());
+							
 		assertThat(originalCosts, contains(35000.0,15000.0,30000.0,88000.0, 35000.0, 45000.0, 15000.0, 45000.0));			 				
 	}
 	
@@ -171,56 +216,51 @@ public class BasicLambda {
 		
 		Optional<Car> mostBoughtCar;
 		mostBoughtCar = salesByCar.entrySet().stream()
-								 //not sure why inference did not work in this case.
-				  				 .max(comparing((ToIntFunction<Map.Entry<Car,List<Sale>>>) entry -> entry.getValue().size()))
-				  				 .map(Map.Entry::getKey);
-				  				 
+								 .max(comparingInt(entry -> entry.getValue().size()))
+								 .map(Map.Entry::getKey);
+								 
 		assertTrue(mostBoughtCar.isPresent());
 		assertThat(mostBoughtCar.get(), is(yaris));
 		
 	}
 
+	@Before
+	public void setUp() {
+		edwin = new Person("Edwin","Dalorzo", 34, true);
+		pedro = new Person("Pedro", "Aguilar", 26, true);
+		karla = new Person("Karla", "Fallas", 30, false);
+		oscar = new Person("Oscar", "Romero", 45, true);
+		franklin = new Person("Franklin", "Fallas", 25, true); 
+		patricia = new Person("Patricia", "Solano", 31, false);
+		alonso = new Person("Alonso", "Dalorzo", 27, true);
+		victoria = new Person("Victoria", "Fallas", 27, false);
+		
+		yaris = new Car("Toyota","Yaris", 2008, 15000);
+		mx5 = new Car("Mazda", "MX-5", 2009, 45000);
+		equator = new Car("Susuki","Equator", 2009, 35000);
+		x6 = new Car("BMW","X6", 2011, 88000);
+		civic = new Car("Honda","Civic", 2012, 30000);
+		tida = new Car("Nissan","Tida", 2013, 35000);
+		
+		edwinFromFranklin = new Sale(edwin, franklin, tida, 20000);
+		oscarFromEdwin = new Sale(oscar, edwin, yaris, 10000);
+		karlaFromAlonso = new Sale(karla, alonso, civic, 25000);
+		patriciaFromPedro = new Sale(patricia, pedro, x6, 75000);
+		victoriaFromOscar = new Sale(victoria, oscar, equator, 30000);
+		franklinFromOscar = new Sale(franklin, oscar, mx5, 39000);
+		alonsoFromKarla = new Sale(alonso, karla, yaris, 9000); 
+		karlaFromFranklin = new Sale(karla, franklin, mx5, 40000);
+		
+		persons = new LinkedHashSet<>(asList( edwin, pedro, karla, oscar, franklin, patricia, alonso, victoria));
+		cars = new LinkedHashSet<>(asList(yaris, mx5, equator, x6, civic, tida));
+		sales = new LinkedHashSet<>(asList(edwinFromFranklin,oscarFromEdwin,karlaFromAlonso,patriciaFromPedro,
+										victoriaFromOscar,franklinFromOscar,alonsoFromKarla,karlaFromFranklin));
+		
+	}
 	
-	//Persons
-	private static final Person edwin = new Person("Edwin","Dalorzo", 34, true);
-	private static final Person pedro = new Person("Pedro", "Aguilar", 26, true);
-	private static final Person karla = new Person("Karla", "Fallas", 30, false);
-	private static final Person oscar = new Person("Oscar", "Romero", 45, true);
-	private static final Person franklin = new Person("Franklin", "Fallas", 25, true); 
-	private static final Person patricia = new Person("Patricia", "Solano", 31, false);
-	private static final Person alonso = new Person("Alonso", "Dalorzo", 27, true);
-	private static final Person victoria = new Person("Victoria", "Fallas", 27, false);
 	
-	//Cars
-	private static final Car yaris = new Car("Toyota","Yaris", 2008, 15000);
-	private static final Car mx5 = new Car("Mazda", "MX-5", 2009, 45000);
-	private static final Car equator = new Car("Susuki","Equator", 2009, 35000);
-	private static final Car x6 = new Car("BMW","X6", 2011, 88000);
-	private static final Car civic = new Car("Honda","Civic", 2012, 30000);
-	private static final Car tida = new Car("Nissan","Tida", 2013, 35000);
 	
-	//Sales
-	private static final Sale edwinFromFranklin = new Sale(edwin, franklin, tida, 20000);
-	private static final Sale oscarFromEdwin = new Sale(oscar, edwin, yaris, 10000);
-	private static final Sale karlaFromAlonso = new Sale(karla, alonso, civic, 25000);
-	private static final Sale patriciaFromPedro = new Sale(patricia, pedro, x6, 75000);
-	private static final Sale victoriaFromOscar = new Sale(victoria, oscar, equator, 30000);
-	private static final Sale franklinFromOscar = new Sale(franklin, oscar, mx5, 39000);
-	private static final Sale alonsoFromKarla = new Sale(alonso, karla, yaris, 9000); 
-	private static final Sale karlaFromFranklin = new Sale(karla, franklin, mx5, 40000);
+		
 	
-	//Collections	
-	private static final Set<Person> persons = new LinkedHashSet<>(asList( edwin, pedro, karla, oscar, franklin, patricia, alonso, victoria));
-	private static final Set<Car> cars = new LinkedHashSet<>(asList(yaris, mx5, equator, x6, civic, tida));
-	private static final Set<Sale> sales = new LinkedHashSet<>(asList(
-				edwinFromFranklin,
-				oscarFromEdwin,
-				karlaFromAlonso,
-				patriciaFromPedro,
-				victoriaFromOscar,
-				franklinFromOscar,
-				alonsoFromKarla,
-				karlaFromFranklin
-			));
 	
 }

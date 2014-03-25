@@ -18,7 +18,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 
 import static java.util.Arrays.asList;
-import static java.util.Comparator.comparing;
+import static java.util.Comparator.*;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
@@ -118,9 +118,9 @@ public class Demo2 {
 		List<Person> persons = new ArrayList<>();
 		//persons.sort( comparing( (IntMapper<Person>) p -> p.getAge() ) );
 		
-		Comparator<Car> byAge = comparing( (ToIntFunction<Car>) car -> car.getYear());
+		Comparator<Car> byAge = comparingInt(car -> car.getYear());
 		
-		persons.sort( comparing( (ToIntFunction<Person>) p -> p.getAge() ) );
+		persons.sort(comparingInt( p -> p.getAge() ) );
 		
 	}
 	

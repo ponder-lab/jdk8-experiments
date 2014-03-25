@@ -10,8 +10,7 @@ import java.io.*;
 
 import static java.util.Collections.reverseOrder;
 import static java.util.Arrays.asList;
-import static java.util.Comparator.comparing;
-import static java.util.Comparator.comparing;
+import static java.util.Comparator.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.hamcrest.Matchers.either;
@@ -534,7 +533,7 @@ public class HackDayTest {
 				karlaFromFranklin
 			));
 	
-	private static final TreeSet<Person> sortedPersons = new TreeSet<>(comparing( (ToIntFunction<Person>) Person::getAge));
+	private static final TreeSet<Person> sortedPersons = new TreeSet<>(comparingInt(Person::getAge));
 	static {
 		sortedPersons.addAll(persons);
 	}
