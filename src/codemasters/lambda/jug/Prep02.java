@@ -29,7 +29,7 @@ public class Prep02 {
 	
 	public static void main(String[] args) {
 		
-		List<String> brands = cars.stream().filter(car -> car.getYear() >= 2012)
+		List<String> brands = cars.parallelStream().filter(car -> car.getYear() >= 2012)
 					 			 .map(car -> car.getBrand()) 
 					 			 .collect(Collectors.toList());
 					 

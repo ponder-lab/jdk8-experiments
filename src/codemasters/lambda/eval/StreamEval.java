@@ -14,7 +14,7 @@ public class StreamEval {
 		BiConsumer<ArrayList<String>,String> acc = ArrayList::add;
 		BiConsumer<ArrayList<String>,ArrayList<String>> comb = ArrayList::addAll;
 		
-		List<String> strings = asList(1,2,3,4,5).stream()
+		List<String> strings = asList(1,2,3,4,5).parallelStream()
 		                                        .map(Object::toString)
 		                                        .collect(ArrayList::new,ArrayList::add,ArrayList::addAll);
 		                                        

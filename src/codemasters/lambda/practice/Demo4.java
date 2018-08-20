@@ -15,8 +15,8 @@ public class Demo4 {
 	public static void main(String[] args) {
 		
 		Stream<Integer> test = asList(1,2,3,4,5,6).stream();
-		Integer max = asList(1,2,3,4,5,6).stream().max(Integer::compare).get();
-		Integer min = asList(1,2,3,4,5,6).stream().min(Integer::compare).get();
+		Integer max = asList(1,2,3,4,5,6).parallelStream().max(Integer::compare).get();
+		Integer min = asList(1,2,3,4,5,6).parallelStream().min(Integer::compare).get();
 		
 		System.out.printf("Min: %d -  Max: %d%n", min,max);
 		
